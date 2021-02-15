@@ -1,0 +1,24 @@
+managed implementation in class ZBP_WorkList unique;
+
+define behavior for ZI_AccHarmoAccounts alias WorkList
+persistent table zacc_status
+lock master
+//authorization master ( instance )
+//etag master <field_name>
+{
+  mapping for ZACC_STATUS corresponding
+  {
+    Project = project;
+    Source  = source;
+    ChartOfAccount = ktopl;
+    CompanyCode = bukrs;
+    GLAccount = saknr;
+    Status = status;
+    Remark = remark;
+  }
+  create;
+  update;
+  field ( read only ) Project, Source;
+  field ( readonly : update ) ChartOfAccount, CompanyCode, GLAccount;
+  action checkAccount result [1] $self;
+}

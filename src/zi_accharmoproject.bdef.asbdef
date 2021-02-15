@@ -1,0 +1,47 @@
+managed implementation in class ZBP_PROJECT unique;
+
+define behavior for ZI_AccHarmoProject alias Project
+persistent table ZACC_PROJECT
+lock master
+//authorization master ( instance )
+//etag master <field_name>
+{
+  mapping for ZACC_PROJECT corresponding
+  {
+    Project = project;
+    Source  = source;
+    Description = description;
+    BusinessSystem = bussystem;
+    Destination = destination;
+  }
+  create;
+  update;
+  delete;
+  field ( mandatory ) Project, Source;
+  action uploadOrgList  result [1] $self;
+  action uploadAccounts result [1] $self;
+  association _SourceOrgUnits { create; }
+}
+
+define behavior for ZI_AccHarmoOrgUnits alias ProjectSource
+persistent table ZACC_PRORGLIST
+lock dependent by _ProjectSource
+//authorization dependent by <association>
+//etag master <field_name>
+{
+  mapping for ZACC_PRORGLIST corresponding
+  {
+    Project = project;
+    Source  = source;
+    CompanyCode = bukrs;
+    ControllingArea = kokrs;
+    ChartOfAccount = ktopl;
+  }
+  update;
+  delete;
+  field ( read only ) Project, Source;
+  field ( readonly : update ) CompanyCode;
+  //field ( mandatory ) CompanyCode;
+  field ( mandatory ) ChartOfAccount;
+  field ( mandatory ) ControllingArea;
+}

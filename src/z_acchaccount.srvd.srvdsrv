@@ -1,0 +1,4 @@
+@EndUserText.label: 'Work List of Accounts'
+define service Z_ACCHACCOUNT {
+  expose ZI_AccHarmoAccounts;
+}

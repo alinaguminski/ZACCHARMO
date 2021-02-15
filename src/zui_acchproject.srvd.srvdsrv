@@ -1,0 +1,5 @@
+@EndUserText.label: 'Account Harmonization Project'
+define service ZUI_ACCHPROJECT {
+  expose ZI_AccHarmoProject as HarmonizationProject;
+  expose ZI_AccHarmoOrgUnits as HarmonizationCustomizing;
+}
